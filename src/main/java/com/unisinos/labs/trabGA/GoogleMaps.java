@@ -64,10 +64,14 @@ public class GoogleMaps implements IGoogleMaps {
 
     public void insertOrderedChromosome(Chromosome chromosome) {
         for(int i = 0; (i<top10Chromossomes.length); i++){
-            if(top10Chromossomes[i] == null || top10Chromossomes[i].getFitness() > chromosome.getFitness()){
-                Chromosome aux = top10Chromossomes[i];
-                top10Chromossomes[i] = chromosome;
-                chromosome = aux;
+            if(top10Chromossomes[i] != null && top10Chromossomes[i].equals(chromosome)) {
+                break;
+            } else {
+                if (top10Chromossomes[i] == null || top10Chromossomes[i].getFitness() > chromosome.getFitness()) {
+                    Chromosome aux = top10Chromossomes[i];
+                    top10Chromossomes[i] = chromosome;
+                    chromosome = aux;
+                }
             }
         }
     }
@@ -81,10 +85,28 @@ public class GoogleMaps implements IGoogleMaps {
     }
 
     public void evolve() {
-
+        Chromosome addingChromosome;
+        for(int i = 0; i < 100; i++){
+            addingChromosome = generateChromosome();
+            insertOrderedChromosome(addingChromosome);
+        }
     }
 
     public void print() {
+        String printingString = "";
+        int[] genes;
+        for(int i =0; i < top10Chromossomes.length; i++){
+            genes = top10Chromossomes[i].getGenes();
+            printingString += "Short path -> " + top10Chromossomes[i].getFitness();
+            for(int j = 0; j < genes.length; j++){
+                printingString += " " + getLetterIndex(genes[j]);
+            }
+            System.out.println(printingString);
+            printingString = "";
+        }
+    }
 
+    private String getLetterIndex(int index){
+        return index >= 0 && index < 27 ? String.valueOf((char)(index + 65)) : null;
     }
 }
