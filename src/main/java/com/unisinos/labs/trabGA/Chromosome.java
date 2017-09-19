@@ -15,16 +15,8 @@ public class Chromosome implements IChromosome{
         return genes;
     }
 
-    public void setGenes(int[] genes) {
-        this.genes = genes;
-    }
-
     public int getFitness() {
         return fitness;
-    }
-
-    public void setFitness(int fitness) {
-        this.fitness = fitness;
     }
 
     public String toString() {
